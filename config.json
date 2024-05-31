@@ -1,0 +1,137 @@
+{
+    "log": {"disabled": false,
+    "level": "info",
+    "output": "box.log",
+    "timestamp": true},
+    "experimental": {
+      "cache_file": {},
+      "clash_api": {
+        "external_controller": "192.168.1.173:9090",
+      "external_ui": "ui",
+      "external_ui_download_url": "",
+      "external_ui_download_detour": "",
+      "secret": "",
+      "default_mode": "rule"
+    }
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "Google",
+        "address": "8.8.8.8",
+        "address_strategy": "ipv4_only",
+        "strategy": "prefer_ipv4",
+        "detour": "select"
+      },
+      {
+        "tag": "CN",
+        "address": "114.114.114.114",
+        "address_strategy": "ipv4_only",
+        "strategy": "prefer_ipv4",
+        "detour": "direct"
+      },
+      {
+        "tag": "AD",
+        "address": "rcode://refused",
+        "detour": "block"
+      }
+    ],
+    "rules": [
+      { "domain": [
+          "bilibili.com"
+        ],
+        "clash_mode": "direct",
+        "server": "CN",
+        "outbound": ["direct"]
+      },
+      {
+        "ip_version": 6,
+        "network": "tcp",
+        "domain": [
+          "youtube.com"
+        ],
+        "clash_mode": "rule",
+        "server": "Google",
+        "outbound": ["select"]
+      }
+    ],
+    "final": "Google",
+    "strategy": "prefer_ipv4",
+    "disable_cache": false,
+    "disable_expire": false,
+    "independent_cache": false,
+    "reverse_mapping": false,
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    }
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "inet4_address": "198.18.0.1/16",
+      "auto_route": true,
+      "stack": "mixed",
+      "sniff": true
+    }
+  ],
+  "route": {
+    "rules":[
+      { "inbound": [
+          "tun-in"
+      ],
+      "outbound": "select"
+    },
+    {
+      "domain": [
+        "bilibili.com"
+      ],
+    "outbound":"direct"
+    }
+    ],
+    "auto_detect_interface": true 
+  },
+  "ntp": {
+    "enabled": false,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m"},
+    "outbounds": [
+      {
+        "type": "direct",
+        "tag": "direct",
+        "override_address": "1.0.0.1",
+        "override_port": 53
+      },
+      {
+        "type": "block",
+        "tag": "block"
+      },
+      {"type": "selector",
+      "tag": "select",
+      "outbounds": [
+        "block",
+        "direct",
+        "proxy",
+        "proxy2",
+        "🇺🇸 专线3x-美国3",
+        "🇺🇸 专线3x-美国4",
+        "🇺🇸 高速隧道1x-美国2",
+        "🇺🇸 高速隧道1x-美国3"
+      ],
+      "default": "proxy",
+  "interrupt_exist_connections": false
+    },
+    {"type":"shadowsocks","tag":"proxy","server":"rk2.youtu2.top","server_port":30031,"method":"chacha20-ietf-poly1305","password":"f363f030-2093-446b-9d94-033bf9ec59ee","tcp_fast_open":true},
+    {"type":"shadowsocks","tag":"proxy2","server":"rk2.youtu2.top","server_port":30032,"method":"chacha20-ietf-poly1305","password":"f363f030-2093-446b-9d94-033bf9ec59ee","tcp_fast_open":true},
+    {"type":"shadowsocks","tag":"🇺🇸 专线3x-美国3","server":"rk2.youtu2.top","server_port":30033,"method":"chacha20-ietf-poly1305","password":"f363f030-2093-446b-9d94-033bf9ec59ee","tcp_fast_open":true},
+    {"type":"shadowsocks","tag":"🇺🇸 专线3x-美国4","server":"rk2.youtu2.top","server_port":30034,"method":"chacha20-ietf-poly1305","password":"f363f030-2093-446b-9d94-033bf9ec59ee","tcp_fast_open":true},
+    {"type":"shadowsocks","tag":"🇺🇸 高速隧道1x-美国1","server":"rk4.youtu2.top","server_port":34031,"method":"chacha20-ietf-poly1305","password":"f363f030-2093-446b-9d94-033bf9ec59ee","tcp_fast_open":true},
+    {"type":"shadowsocks","tag":"🇺🇸 高速隧道1x-美国2","server":"rk4.youtu2.top","server_port":34032,"method":"chacha20-ietf-poly1305","password":"f363f030-2093-446b-9d94-033bf9ec59ee","tcp_fast_open":true},
+    {"type":"shadowsocks","tag":"🇺🇸 高速隧道1x-美国3","server":"rk4.youtu2.top","server_port":34033,"method":"chacha20-ietf-poly1305","password":"f363f030-2093-446b-9d94-033bf9ec59ee","tcp_fast_open":true}
+    ]
+
+}
+  
